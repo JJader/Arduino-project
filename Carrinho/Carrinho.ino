@@ -7,6 +7,7 @@ int IN2 = 5;
 int IN3 = 6;
 int IN4 = 7;
 #define led 8
+#define buz 9
 char comando;
 
 void setup() {
@@ -17,7 +18,7 @@ void setup() {
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
   pinMode(led, OUTPUT);
-
+  pinMode(buz, OUTPUT);
   delay(3000);
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
@@ -33,12 +34,18 @@ void loop() {
    while (bluetooth.available()) {
     comando = bluetooth.read();
     Serial.println(comando);
-
+    
     if (comando == 'W'){
-      digitalWrite(led, HIGH);
+      funcLed(HIGH);
     }
     if (comando == 'w'){
-      digitalWrite(led, LOW);
+      funcLed(LOW);
+    }
+    if (comando == 'V'){
+      funcBuz(HIGH);
+    }
+    if (comando == 'v'){
+      funcBuz(LOW);
     }
     if (comando == 'F') {
       frente();
@@ -57,13 +64,21 @@ void loop() {
   }
 }
 
+
+void funcLed(bool a){
+digitalWrite(led, a);
+}
+
+void funcBuz(bool b){
+digitalWrite(buz,b);
+}
+
 void frente() {
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
   digitalWrite(IN3, LOW);
   digitalWrite(IN4, HIGH);
-  //Gira o Motor A e B no sentido horario
-  
+  //Gira o Motor A e B no sentido horario 
 }
 
 void tras() {
@@ -72,8 +87,6 @@ void tras() {
   digitalWrite(IN2, HIGH);
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
-  
-  
 }
 
 void esquerda() {
