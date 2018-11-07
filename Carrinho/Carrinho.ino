@@ -31,8 +31,16 @@ void setup() {
 }
 
 void loop() {
-   while (bluetooth.available()) {
+   while (bluetooth.available() || Serial.available()) {
+    
+    if (bluetooth.available()){
     comando = bluetooth.read();
+    }else{
+    comando = Serial.read();
+    }
+
+
+    
     Serial.println(comando);
     
     if (comando == 'W'){
@@ -41,11 +49,8 @@ void loop() {
     if (comando == 'w'){
       funcLed(LOW);
     }
-    if (comando == 'V'){
-      funcBuz(HIGH);
-    }
-    if (comando == 'v'){
-      funcBuz(LOW);
+    if (comando == 'V' || comando == 'v'){
+      funcBuz();
     }
     if (comando == 'F') {
       frente();
@@ -69,8 +74,11 @@ void funcLed(bool a){
 digitalWrite(led, a);
 }
 
-void funcBuz(bool b){
-digitalWrite(buz,b);
+void funcBuz(){
+digitalWrite(buz,HIGH);
+delay(500);
+digitalWrite(buz, LOW);
+delay(10);
 }
 
 void frente() {
