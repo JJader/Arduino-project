@@ -9,8 +9,12 @@ int IN4 = 7;
 #define led 8
 #define buz 9
 
+<<<<<<< HEAD
 int veloA = 11, veloB = 10;
 float fat = 0;
+=======
+int veloA = 11, veloB = 10, fat = 0;
+>>>>>>> efcd8004b7652bcbdbd5ab7311c184ccae60fc8f
 char comando;
 
 void setup() {
