@@ -1,5 +1,4 @@
 #include<SoftwareSerial.h>
-SoftwareSerial bluetooth(2,3); //rx tx do arduino
 //  tx --> pode ir no arduino //2
 //  rx --> precisa passar pelo conversor //3
 int IN1 = 7;
@@ -9,16 +8,12 @@ int IN4 = 4;
 #define led 8
 #define buz 9
 
-<<<<<<< HEAD
+
 int veloA = 11, veloB = 10;
 float fat = 0;
-=======
-int veloA = 11, veloB = 10, fat = 0;
->>>>>>> efcd8004b7652bcbdbd5ab7311c184ccae60fc8f
 char comando;
 
 void setup() {
-  bluetooth.begin(9600);
   Serial.begin(9600);
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
@@ -35,90 +30,108 @@ void setup() {
   digitalWrite(IN4, LOW);
   digitalWrite(led, HIGH);
   delay(1000);
-  digitalWrite(led,LOW);
+  digitalWrite(led, LOW);
   parado();
 }
 
 void loop() {
-   while (bluetooth.available() || Serial.available()) {
-    if (bluetooth.available()){comando = bluetooth.read();}
-    else{comando = Serial.read();}
-
+  while (Serial.available()) {
+    comando = Serial.read();
     Serial.println(comando);
-    
     analogWrite(veloA, fat);
     analogWrite(veloB, fat);
 
-    switch(comando){
+    switch (comando) {
 
-        case '0':
+      case '0':
         fat = 0;
         break;
-        
-        case '1':
-        fat = 25.5*1;
-        break;
-        
-        case '2':
-        fat = 25.5*2;
-        break;
-        
-        case '3':
-        fat = 25.5*3;
-        break;
-        
-        case '4':
-        fat = 25.5*4;
-        break;
-        
-        case '5':
-        fat = 25.5*5;
-        break;
-        
-        case '6':
-        fat = 25.5*6;
-        break;
-        
-        case '7':
-        fat = 25.5*7;
-        break;
-        
-        case '8':
-        fat = 25.5*8;
-        break;
-        
-        case '9':
-        fat = 25.5*9;
-        break;
-        
-        case 'q':
-        fat = 25.5*10;
+
+      case '1':
+        fat = 25.5 * 1;
         break;
 
-     default:
-    if (comando == 'W'){funcLed(HIGH);}
-    if (comando == 'w'){funcLed(LOW);}
-    if (comando == 'V' || comando == 'v'){funcBuz();}
-    if (comando == 'F') {frente();}
-    else if (comando == 'B') {tras();}
-    else if (comando == 'L') {esquerda();}
-    else if (comando == 'R') {direita();}
-    else { parado();}
-    break;
+      case '2':
+        fat = 25.5 * 2;
+        break;
+
+      case '3':
+        fat = 25.5 * 3;
+        break;
+
+      case '4':
+        fat = 25.5 * 4;
+        break;
+
+      case '5':
+        fat = 25.5 * 5;
+        break;
+
+      case '6':
+        fat = 25.5 * 6;
+        break;
+
+      case '7':
+        fat = 25.5 * 7;
+        break;
+
+      case '8':
+        fat = 25.5 * 8;
+        break;
+
+      case '9':
+        fat = 25.5 * 9;
+        break;
+
+      case 'a':
+        fat = 25.5 * 10;
+        break;
+
+      case 'A':
+        fat = 25.5 * 10;
+        break;
+
+      default:
+
+        if (comando == 'w') {
+          funcLed(!digitalRead(led));
+        }
+        else if (comando == 'V' || comando == 'v') {
+          funcBuz();
+        }
+        else if (comando == 'F' || comando == 'f') {
+          frente();
+        }
+        else if (comando == 'B' || comando == 'b') {
+          tras();
+        }
+        else if (comando == 'L' || comando == 'l') {
+          esquerda();
+        }
+        else if (comando == 'R' || comando == 'r') {
+          direita();
+        }
+        else if (comando == 'P' || comando == 'p'){
+          parado();
+        }
+        break;
     }
-    
-  }}
 
-
-void funcLed(bool a){
-digitalWrite(led, a);
+  }
 }
 
-void funcBuz(){
-digitalWrite(buz,HIGH);
-delay(500);
-digitalWrite(buz, LOW);
-delay(10);
+
+void funcLed(bool a) {
+  digitalWrite(led, a);
+  Serial.println("Okay");
+}
+
+void funcBuz() {
+  digitalWrite(buz, HIGH);
+  delay(500);
+  digitalWrite(buz, LOW);
+  delay(10);
+  Serial.println("Okay");
 }
 
 void frente() {
@@ -126,7 +139,8 @@ void frente() {
   digitalWrite(IN2, LOW);
   digitalWrite(IN3, LOW);
   digitalWrite(IN4, HIGH);
-  //Gira o Motor A e B no sentido horario 
+  Serial.println("Okay");
+  //Gira o Motor A e B no sentido horario
 }
 
 void tras() {
@@ -135,6 +149,7 @@ void tras() {
   digitalWrite(IN2, HIGH);
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
+  Serial.println("Okay");
 }
 
 void esquerda() {
@@ -142,6 +157,7 @@ void esquerda() {
   digitalWrite(IN2, HIGH);
   digitalWrite(IN3, LOW);
   digitalWrite(IN4, HIGH);
+  Serial.println("Okay");
 }
 
 void direita() {
@@ -149,6 +165,7 @@ void direita() {
   digitalWrite(IN2, LOW);
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
+  Serial.println("Okay");
 }
 
 void parado() {
@@ -156,4 +173,5 @@ void parado() {
   digitalWrite(IN2, HIGH);
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, HIGH);
+  Serial.println("Okay");
 }
